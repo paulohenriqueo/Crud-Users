@@ -1,7 +1,7 @@
 export class User {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
-    createdAt: Date;
+  id: string;
+  name: string;
+  email: string;
+  role?: string;
+  createdAt: Date;
 }
