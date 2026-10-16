@@ -19,7 +19,7 @@ export class UsersService {
     const user: User = {
       id: randomUUID(),
       name: createUserDto.name,
-      email: createUserDto.email,
+      email: email,
       role: createUserDto.role,
       createdAt: new Date(),
     };
@@ -39,7 +39,7 @@ export class UsersService {
     return user;
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto): User {
     const user = this.findOne(id);
 
     if (updateUserDto.email !== undefined) {
