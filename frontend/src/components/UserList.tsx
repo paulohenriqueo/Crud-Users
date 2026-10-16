@@ -2,9 +2,10 @@ import type { User } from "../types/user";
 
 type Props = {
   users: User[];
+  onEdit: (user: User) => void;
 };
 
-export function UserList({ users }: Props) {
+export function UserList({ users, onEdit }: Props) {
     if (users.length === 0) {
         return <p>Nenhum usuário cadastrado</p>;
     }
@@ -26,6 +27,11 @@ export function UserList({ users }: Props) {
                         <td>{user.email}</td>
                         <td>{user.role || '--'}</td>
                         <td>{new Date(user.createdAt).toLocaleString('pt-BR')}</td>
+                        <td>
+                            <button type="button" onClick={() => onEdit(user)}>
+                                Editar
+                            </button>
+                        </td>
                     </tr>
                 ))}
             </tbody>

@@ -24,3 +24,47 @@ th {
 .error {
   color: #c92a2a;
 }
+
+.user-form {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+}
+
+.user-form h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.user-form label {
+  display: grid;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.user-form input {
+  padding: 8px;
+  font: inherit;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  padding: 6px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.error {
+  white-space: pre-line;
+}
