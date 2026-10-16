@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -9,6 +13,9 @@ export class UsersService {
   private readonly users: User[] = [];
 
   create(createUserDto: CreateUserDto): User {
+    const email = this.normalizeEmail(createUserDto.email);
+    this.ensureEmailIsFree(email);
+
     const user: User = {
       id: randomUUID(),
       name: createUserDto.name,
@@ -34,6 +41,13 @@ export class UsersService {
 
   update(id: string, updateUserDto: UpdateUserDto) {
     const user = this.findOne(id);
+
+    if (updateUserDto.email !== undefined) {
+      const email = this.normalizeEmail(updateUserDto.email);
+      this.ensureEmailIsFree(email, id);
+      updateUserDto.email = email;
+    }
+
     Object.assign(user, updateUserDto);
     return user;
   }
@@ -41,5 +55,18 @@ export class UsersService {
   remove(id: string): void {
     const user = this.findOne(id);
     this.users.splice(this.users.indexOf(user), 1);
+  }
+
+  private normalizeEmail(email: string): string {
+    return email.trim().toLowerCase();
+  }
+
+  private ensureEmailIsFree(email: string, ignoreId?: string): void {
+    const taken = this.users.some(
+      (u) => u.email === email && u.id !== ignoreId,
+    );
+    if (taken) {
+      throw new ConflictException(`O email já está cadastrado`);
+    }
   }
 }

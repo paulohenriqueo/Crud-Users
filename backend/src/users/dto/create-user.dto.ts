@@ -11,5 +11,5 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString({ message: 'O cargo precisa ser um texto' })
-  role: string;
+  role?: string;
 }
