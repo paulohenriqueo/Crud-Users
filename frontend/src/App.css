@@ -19,6 +19,26 @@ td {
 
 th {
   background: #eaeef2;
+  width: auto;
+}
+
+button {
+  padding: 6px 14px;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  width: auto;
+  margin: 5px;
+}
+
+h1{
+  padding: 16px 0;
+  text-align: center;
+}
+
+::placeholder {
+  color: #a0aec0;
+  opacity: 0.7;
 }
 
 .error {
@@ -28,7 +48,7 @@ th {
 .user-form {
   display: grid;
   gap: 12px;
-  max-width: 420px;
+  max-width: auto;
   margin-bottom: 32px;
   padding: 20px;
   background: #ffffff;
@@ -59,12 +79,11 @@ th {
   gap: 8px;
 }
 
-button {
-  padding: 6px 14px;
-  font: inherit;
-  cursor: pointer;
-}
-
 .error {
   white-space: pre-line;
+}
+
+.edit{
+  text-align: center;
+  vertical-align: middle;
 }

@@ -39,7 +39,7 @@ export function UserForm({ user, onSubmit, onCancel}: Props){
 
       <label>
         Nome
-        <input value={name} onChange={(e) => setName(e.target.value)} />
+        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Digite o nome do Usuário" />
       </label>
 
       <label>
@@ -48,12 +48,13 @@ export function UserForm({ user, onSubmit, onCancel}: Props){
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Digite o email do Usuário"
         />
       </label>
 
       <label>
         Cargo (opcional)
-        <input value={role} onChange={(e) => setRole(e.target.value)} />
+        <input value={role} onChange={(e) => setRole(e.target.value)} placeholder="Digite o cargo do Usuário" />
       </label>
 
       {error && <p className="error">{error}</p>}

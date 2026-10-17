@@ -18,6 +18,7 @@ export function UserList({ users, onEdit }: Props) {
                     <th>Email</th>
                     <th>Cargo</th>
                     <th>Criado em</th>
+                    <th className="edit">Opções</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,9 +28,12 @@ export function UserList({ users, onEdit }: Props) {
                         <td>{user.email}</td>
                         <td>{user.role || '--'}</td>
                         <td>{new Date(user.createdAt).toLocaleString('pt-BR')}</td>
-                        <td>
+                        <td className="edit">
                             <button type="button" onClick={() => onEdit(user)}>
                                 Editar
+                            </button>
+                            <button type="button">
+                                Excluir
                             </button>
                         </td>
                     </tr>
