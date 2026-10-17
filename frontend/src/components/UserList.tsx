@@ -3,9 +3,10 @@ import type { User } from "../types/user";
 type Props = {
   users: User[];
   onEdit: (user: User) => void;
+  onDelete: (user: User) => void;
 };
 
-export function UserList({ users, onEdit }: Props) {
+export function UserList({ users, onEdit, onDelete }: Props) {
     if (users.length === 0) {
         return <p>Nenhum usuário cadastrado</p>;
     }
@@ -32,7 +33,7 @@ export function UserList({ users, onEdit }: Props) {
                             <button type="button" onClick={() => onEdit(user)}>
                                 Editar
                             </button>
-                            <button type="button">
+                            <button type="button" onClick={() => onDelete(user)}>
                                 Excluir
                             </button>
                         </td>

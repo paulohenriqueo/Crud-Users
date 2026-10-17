@@ -18,6 +18,10 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
         throw new Error(Array.isArray(message) ? message.join('\n') : message);
     }
 
+    if (response.status === 204) {
+        return undefined as T;
+    }
+
     return response.json();
 }
 
@@ -37,4 +41,8 @@ export function updateUser(id: string, data: UserInput): Promise<User> {
         method: 'PATCH',
         body: JSON.stringify(data),
     });
+}
+
+export function deleteUser(id: string): Promise<void> {
+    return request<void>(`/users/${id}`, { method: 'DELETE' });
 }
