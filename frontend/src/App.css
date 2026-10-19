@@ -87,3 +87,41 @@ h1{
   text-align: center;
   vertical-align: middle;
 }
+
+.confirm-dialog {
+  width: min(420px, calc(100% - 32px));
+  padding: 0;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  border: 3px solid #d0d7de;
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(31, 35, 40, 0.5);
+}
+
+.confirm-dialog-content {
+  padding: 20px;
+}
+
+.confirm-dialog h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+.confirm-dialog .actions {
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+button.danger {
+  color: #ffffff;
+  background: #c92a2a;
+  border: 1px solid #c92a2a;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

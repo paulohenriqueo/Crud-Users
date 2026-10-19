@@ -4,12 +4,16 @@ import type { User, UserInput } from './types/user'
 import { createUser, deleteUser, listUsers, updateUser } from './api/users'
 import { UserList } from './components/UserList'
 import { UserForm } from './components/UserForm'
+import { ConfirmDialog } from './components/ConfirmDialog'
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<User | null>(null);
+  const [deleting, setDeleting] = useState<User | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
   useEffect(() => {
@@ -39,18 +43,23 @@ function App() {
   }
 
   async function handleDelete(user: User){
+    setDeleting(null);
+    setDeleting(user);
+  }
 
-        if (!window.confirm(`Excluir o usuário ${user.name}?`)) return;
+  async function handleConfirmDelete(){
+    if (!deleting) return;
 
-
-    try{
-      await deleteUser(user.id);
-      setUsers((current) => current.filter((u) => u.id !== user.id));
-  
-      if (editing?.id === user.id) setEditing(null);
-    }
-    catch (err) {
-      window.alert(err instanceof Error ? err.message : 'Erro inesperado');
+    setIsDeleting(true);
+    try {
+      await deleteUser(deleting.id);
+      setUsers((current) => current.filter((u) => u.id !== deleting.id));
+      if (editing?.id === deleting.id) setEditing(null);
+      setDeleting(null);
+    } catch (err) {
+      setDeleteError(err instanceof Error ? err.message : 'Erro insesperado');
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -58,7 +67,7 @@ function App() {
     <main>
       <h1>Lista de usuários</h1>
 
-      <UserForm 
+      <UserForm
         key={editing?.id ?? 'novo'}
         user={editing}
         onSubmit={editing ? handleUpdate : handleCreate}
@@ -67,7 +76,20 @@ function App() {
 
       {loading && <p>Carregando...</p>}
       {error && <p className="error">{error}</p>}
-      {!loading && !error && <UserList users={users} onEdit={setEditing} onDelete={handleDelete} />}
+      {!loading && !error && (
+        <UserList users={users} onEdit={setEditing} onDelete={handleDelete} />
+      )}
+
+      <ConfirmDialog
+        open={deleting !== null}
+        title="Excluir usuário"
+        message={`Tem certeza que deseja excluir ${deleting?.name ?? ''}? Essa ação não pode ser desfeita.`}
+        confirmLabel="Excluir"
+        busy={isDeleting}
+        error={deleteError}
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleting(null)}
+      />
     </main>
   );
 }
